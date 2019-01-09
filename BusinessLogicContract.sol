@@ -86,45 +86,44 @@ contract BusinessLayer is Owned, transferContract {
     bool public publicTransfers;
 
 
-    constructor(string memory _name, uint8 _decimals, string memory _symbol, uint256 _ttlSupply, address _administrator, address _datalayer) public {
-		
-		// provide contract name, decimals and symbol of share
-		name = _name;                         
+    constructor(string memory _name, uint8 _decimals, string memory _symbol, uint256 _ttlSupply, address _administrator, address _datalayer) public {		
+        // provide contract name, decimals and symbol of share
+        name = _name;                         
         decimals = _decimals; 
         symbol = _symbol;
-		
-		// ownership and administrator
-        owner = msg.sender;
-		require(_administrator != address(0));
-		administrator = _administrator;
 
-		// connect to data layer
-		require(connectToDataLayer(_datalayer));
-		
-		// set total supply of shares
-		dL.setTotalSupply(_ttlSupply * 10 ** uint256(decimals));
-		
+        // ownership and administrator
+        owner = msg.sender;
+        require(_administrator != address(0));
+        administrator = _administrator;
+
+        // connect to data layer
+        require(connectToDataLayer(_datalayer));
+
+        // set total supply of shares
+        dL.setTotalSupply(_ttlSupply * 10 ** uint256(decimals));
+
         //transfer all to owner
-		dL.setShareholderBalance(msg.sender, _ttlSupply * 10 ** uint256(decimals));
+        dL.setShareholderBalance(msg.sender, _ttlSupply * 10 ** uint256(decimals));
         emit Transfer(address(0x0), msg.sender, _ttlSupply * 10 ** uint256(decimals));
     }
 	
-	function connectToDataLayer(address _datalayer) public onlyOwner returns (bool) {
-	    uint codeLength;
-		/**
-		 * Data layer to connect to needs to be a contract - Checks for code existence.
-		 */
-		assembly {
-			codeLength := extcodesize(_datalayer)
-		}
-		require(codeLength > 0);
-		datalayer = _datalayer;
-		
-		
-		// initialise datalayer contract
-		dL = ShareholderContract(datalayer);
-		return true;
-	}
+    function connectToDataLayer(address _datalayer) public onlyOwner returns (bool) {
+        uint codeLength;
+        /**
+            * Data layer to connect to needs to be a contract - Checks for code existence.
+            */
+        assembly {
+            codeLength := extcodesize(_datalayer)
+        }
+        require(codeLength > 0);
+        datalayer = _datalayer;
+
+
+        // initialise datalayer contract
+        dL = ShareholderContract(datalayer);
+        return true;
+    }
 
 
     function transfer(address _to, uint256 _value) public returns (bool) {
@@ -148,7 +147,8 @@ contract BusinessLayer is Owned, transferContract {
         return dL.getTotalSupply();
     }
 
-    
+
+// pending implementation
 //     /**
 // 	 * can be used as part of redemption
 // 	 * burns shares collected to this account

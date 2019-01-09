@@ -1,21 +1,21 @@
 pragma solidity ^0.5.0;
 
 contract Shareholders {
-	uint256 public totalShares;
+    uint256 public totalShares;
     mapping (address => Shareholder) internal shareholderDetail;
 	
-	struct Shareholder {
-		bytes32 uid;
-		uint256 amount;
-	}
-	
-	function getShareholderBalance(address _address) public returns (uint256);
-	function setShareholderBalance(address _address, uint256 _value) public returns (bool);
-	function getShareholderUID(address _address) public returns (bytes32);
-	function setShareholderUID(address _address, bytes32 _uid) public returns (bool);
-	
-	function setTotalSupply(uint256 _amount) public returns (bool);
-	function getTotalSupply() public view returns (uint256);
+    struct Shareholder {
+        bytes32 uid;
+        uint256 amount;
+    }
+
+    function getShareholderBalance(address _address) public returns (uint256);
+    function setShareholderBalance(address _address, uint256 _value) public returns (bool);
+    function getShareholderUID(address _address) public returns (bytes32);
+    function setShareholderUID(address _address, bytes32 _uid) public returns (bool);
+
+    function setTotalSupply(uint256 _amount) public returns (bool);
+    function getTotalSupply() public view returns (uint256);
 }
 
 contract Owned {
