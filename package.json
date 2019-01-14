@@ -1,0 +1,26 @@
+{
+  "name": "lifecare-security-token",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Enigmatic331/LifeCare-Security-Token.git"
+  },
+  "author": "Enigmatic331",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Enigmatic331/LifeCare-Security-Token/issues"
+  },
+  "homepage": "https://github.com/Enigmatic331/LifeCare-Security-Token#readme",
+  "dependencies": {
+    "bignumber.js": "^8.0.2",
+    "truffle-hdwallet-provider": "^1.0.2"
+  }
+}
