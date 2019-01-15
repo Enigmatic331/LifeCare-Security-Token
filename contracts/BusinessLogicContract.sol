@@ -20,7 +20,7 @@ contract ShareholderContract {
 }
 
 
-contract Owned {
+contract BusinessOwned {
     address public owner;
 	address public administrator;
 
@@ -41,7 +41,7 @@ contract Owned {
     }
 }
 
-contract transferContract is ERC20 {
+contract TransferContract is ERC20 {
     using SafeMath for uint256;
 
     ShareholderContract public dL;
@@ -75,7 +75,7 @@ contract transferContract is ERC20 {
 
 
 //token contract
-contract BusinessLayer is Owned, transferContract {
+contract BusinessLogicContract is BusinessOwned, TransferContract {
     
     event Burn(address indexed burner, uint256 value);
     

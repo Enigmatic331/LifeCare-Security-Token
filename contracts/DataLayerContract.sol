@@ -18,8 +18,8 @@ contract Shareholders {
     function getTotalSupply() public view returns (uint256);
 }
 
-contract Owned {
-    address public Owner;
+contract DataOwned {
+    address public owner;
     address public approvedBusinessLayer;
     
     modifier onlyCallableByBusinessLayer {
@@ -28,17 +28,17 @@ contract Owned {
     }
     
     modifier onlyOwner {
-        require(Owner == msg.sender);
+        require(owner == msg.sender);
         _;
     }
 }
 
-contract DataLayer is Shareholders, Owned {
+contract DataLayerContract is Shareholders, DataOwned {
     bool hadSetSupply = false;
     
     constructor(address _pregeneratedBusinessLogicAddress) public {
         // set Owner
-        Owner = msg.sender;
+        owner = msg.sender;
         approvedBusinessLayer = _pregeneratedBusinessLogicAddress;
     }
     
