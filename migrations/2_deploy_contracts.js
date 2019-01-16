@@ -48,12 +48,12 @@ module.exports = function(deployer, network, accounts){
         return deployer.deploy(dataLayerContract, contractAdd2, {from: accounts[1]});
     }).then(function(instance){
         dataContractInstance = instance;
-        console.log(dataContractInstance.address + " : " + contractAdd1);
+        //console.log(dataContractInstance.address + " : " + contractAdd1);
 
-        return deployer.deploy(businessLogicContract, tokenConfig.tokenName, tokenConfig.tokenDecimals, tokenConfig.tokenSymbol, tokenConfig.tokenTotalSupply, accounts[1], contractAdd1, {from: accounts[1]});
+        return deployer.deploy(businessLogicContract, tokenConfig.tokenName, tokenConfig.tokenDecimals, tokenConfig.tokenSymbol, tokenConfig.tokenTotalSupply, accounts[0], contractAdd1, {from: accounts[1]});
     }).then(function(instance){
         businessContractInstance = instance;
 
-        console.log(businessContractInstance.address + " : " + contractAdd2);
+        //console.log(businessContractInstance.address + " : " + contractAdd2);
     });
 }
