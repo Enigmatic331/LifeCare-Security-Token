@@ -14,8 +14,8 @@ contract Shareholders {
     function getShareholderUID(address _address) public returns (bytes32);
     function setShareholderUID(address _address, bytes32 _uid) public returns (bool);
 
-    function setTotalSupply(uint256 _amount) public returns (bool);
     function getTotalSupply() public view returns (uint256);
+    function adjustTotalSupply(uint256 _amount, bool add) public returns (bool);
 }
 
 contract DataOwned {
@@ -53,12 +53,26 @@ contract DataLayerContract is Shareholders, DataOwned {
         return true;
     }
     
-    function setTotalSupply(uint256 _amount) public onlyCallableByBusinessLayer returns (bool) {
+    function initTotalSupply(uint256 _amount) public onlyCallableByBusinessLayer returns (bool) {
         // can only be done once - done during constructor initialisation of business layer
         // subsequent change in supply needs to be minted or burnt, even if business layer changes
         require(hadSetSupply == false);
         totalShares = _amount;
         hadSetSupply = true;
+        return true;
+    }
+
+    function adjustTotalSupply(uint256 _amount, bool add) public onlyCallableByBusinessLayer returns (bool) {
+        require(hadSetSupply == true);
+        if (add == true) {
+            // prevent overflow
+            require(totalShares + _amount > totalShares);
+            totalShares = totalShares + _amount;
+        } else {
+            // prevent underflow
+            require(_amount <= totalShares);
+            totalShares = totalShares - _amount;
+        }
         return true;
     }
     
