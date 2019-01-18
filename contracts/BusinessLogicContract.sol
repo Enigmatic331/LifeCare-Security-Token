@@ -15,7 +15,7 @@ contract ShareholderContract {
 	function setShareholderBalance(address _address, uint256 _value) public returns (uint256);
 	function getShareholderUID(address _address) public view returns (bytes32);
 	function setShareholderUID(address _address, bytes32 _uid) public returns (bool);
-	function setTotalSupply(uint256 _amount) public returns (bool);
+	function initTotalSupply(uint256 _amount) public returns (bool);
 	function getTotalSupply() public view returns (uint256);
 	function adjustTotalSupply(uint256 _amount, bool add) public returns (bool);
 }
@@ -121,7 +121,7 @@ contract BusinessLogicContract is BusinessOwned, TransferContract {
         require(connectToDataLayer(_datalayer));
 
         // set total supply of shares
-        dL.setTotalSupply(_ttlSupply * 10 ** uint256(decimals));
+        dL.initTotalSupply(_ttlSupply * 10 ** uint256(decimals));
 
         //transfer all to owner
         dL.setShareholderBalance(msg.sender, _ttlSupply * 10 ** uint256(decimals));
